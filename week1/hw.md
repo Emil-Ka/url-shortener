@@ -190,6 +190,7 @@ sequenceDiagram
 Делай шаги по порядку. У каждого в конце — **Проверка**: как убедиться, что шаг закрыт.
 
 Как пользоваться заданием:
+- **Пишешь в своём репозитории.** Этот файл и папка `boilerplates/` лежат в скачанном шаблоне (`url-shortener-template`). Свой код держишь в отдельном репозитории и копируешь в него boilerplate из шаблона. Как разложить две папки — см. [README, раздел «С чего начать»](../README.md#с-чего-начать).
 - **Код пишешь сам** — это и есть смысл: `.proto`-контракт и весь Go-код руками. Готовые ответы для самопроверки (когда реально застрял) лежат в соседнем файле [`answers.md`](answers.md).
 - **Команды и конфиги можно копировать** — установка инструментов, `buf generate`, `migrate`, docker и т.п. Их зубрить не нужно.
 - Готовые инфра-файлы (go.work, Makefile, docker-compose, .golangci, .mockery, buf.yaml/buf.gen.yaml, `user/.env.template`) лежат в `boilerplates/` — их копируешь как есть. У каждого сервиса свой `.env`.
@@ -226,7 +227,7 @@ go install github.com/vektra/mockery/v2@latest
 
 Монорепо на Go Workspaces: один репозиторий, несколько Go-модулей, объединённых файлом `go.work`. Каждый сервис — отдельный модуль в корне (`user/`, позже `url/`, `gateway/`...), а контракты всех сервисов лежат в общем модуле `shared/`.
 
-1. Создай корневую папку и репозиторий:
+1. Создай корневую папку и репозиторий. Это **твой** проект, отдельная папка рядом со скачанным `url-shortener-template`:
    ```bash
    mkdir url-shortener && cd url-shortener
    git init
@@ -246,7 +247,7 @@ go install github.com/vektra/mockery/v2@latest
    go work init ./user ./shared
    ```
    Благодаря `go.work` модуль `user` видит `shared` локально (без публикации в git/прокси).
-5. Скопируй готовые файлы из `boilerplates/` в корень: `.gitignore`, `.golangci.yml`, `.mockery.yaml`, `Makefile`, `docker-compose.yml`. Конфиги buf — в `shared/proto/`: `buf.yaml`, `buf.gen.yaml`. И `user/.env.template` → переименуй в `user/.env` (у каждого сервиса свой `.env` со своими переменными).
+5. Скопируй готовые файлы из шаблона (`../url-shortener-template/week1/boilerplates/`) в корень своего репозитория: `.gitignore`, `.golangci.yml`, `.mockery.yaml`, `Makefile`, `docker-compose.yml`. Конфиги buf — в `shared/proto/`: `buf.yaml`, `buf.gen.yaml`. И `user/.env.template` → переименуй в `user/.env` (у каждого сервиса свой `.env` со своими переменными).
 
 Должно получиться:
 ```

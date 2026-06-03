@@ -2,6 +2,53 @@
 
 Сокращатель ссылок с микросервисной архитектурой. Проект закрепляет все технологии из трека: Go, gRPC, PostgreSQL, MongoDB, Redis, Kafka, ClickHouse, Docker, CI/CD, чистая архитектура, транзакции, Saga, observability.
 
+## С чего начать
+
+Этот репозиторий — **шаблон-источник**, а не место, где ты пишешь код. Здесь лежат:
+- задания по неделям: `week1/hw.md` … `week5/hw.md`;
+- готовый **boilerplate** (go.work, Makefile, docker-compose, конфиги, `go.mod`, `.env.template`) в папках `weekN/boilerplates/`;
+- эталонные ответы для самопроверки: `weekN/answers.md`.
+
+**Откуда качать:** https://github.com/Emil-Ka/url-shortener
+
+### 1. Скачай шаблон
+
+```bash
+git clone git@github.com:Emil-Ka/url-shortener.git url-shortener-template
+```
+
+Папку называем `url-shortener-template`, чтобы не путать со своим проектом. Без git подойдёт кнопка **Code → Download ZIP** на GitHub.
+
+### 2. Рядом создай свой репозиторий
+
+Свой проект ты создаёшь **сам, в отдельной папке и своём git-репозитории**. Весь твой код живёт там; в шаблон ты ничего не коммитишь.
+
+```bash
+mkdir url-shortener && cd url-shortener
+git init
+```
+
+Должно получиться две независимые папки бок о бок:
+
+```
+~/projects/
+├── url-shortener-template/   скачанный шаблон: задания, boilerplate, эталоны (только читаешь)
+└── url-shortener/            твой репозиторий: сюда пишешь код и коммитишь
+```
+
+### 3. Копируй boilerplate по мере надобности
+
+Базовую структуру руками не пишут, её ты всё равно копируешь как есть. Каждую неделю берёшь готовые файлы из шаблона и кладёшь в свой репозиторий:
+
+```bash
+# выполняешь из своей папки url-shortener; пример для первой недели
+cp ../url-shortener-template/week1/boilerplates/Makefile .
+cp ../url-shortener-template/week1/boilerplates/docker-compose.yml .
+# полный список файлов недели смотри в weekN/hw.md, Шаг 1
+```
+
+Весь остальной код (`.proto`-контракты, бизнес-логику, репозитории, тесты) **пишешь сам**, в этом и смысл проекта. Эталоны в `answers.md` смотри только когда реально застрял.
+
 ## Архитектура
 
 ```
