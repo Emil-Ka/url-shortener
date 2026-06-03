@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+# Имена таргетов = имена сервисов в docker-compose; порт 9090 — ops-сервер с /metrics.
+scrape_configs:
+  - job_name: 'gateway'
+    static_configs:
+      - targets: ['gateway:9090']
+
+  - job_name: 'user'
+    static_configs:
+      - targets: ['user:9090']
+
+  - job_name: 'url'
+    static_configs:
+      - targets: ['url:9090']
+
+  - job_name: 'analytics'
+    static_configs:
+      - targets: ['analytics:9090']

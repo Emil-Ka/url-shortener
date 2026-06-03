@@ -1,0 +1,9 @@
+version: v2
+
+# Линт и проверки обратной совместимости для .proto.
+lint:
+  use:
+    - STANDARD
+breaking:
+  use:
+    - FILE

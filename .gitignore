@@ -1,0 +1,33 @@
+# Бинарники / артефакты сборки
+bin/
+*.exe
+*.test
+*.out
+coverage.*
+
+# Сгенерированный из proto код (shared/pkg/proto/**) КОММИТИМ —
+# чтобы свежий клон и CI собирались без установки buf (см. week5).
+# Поэтому *.pb.go НЕ игнорируем.
+
+# Локальные env / секреты
+.env
+.env.local
+*.local
+
+# Моки (mockery) — обычно не коммитят
+**/mocks/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Логи
+*.log
+
+# Docker volumes (если кто-то положит локально)
+volumes/

@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Сгенерированный proto закоммичен в shared/pkg/proto, поэтому buf в CI не нужен.
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module: [user, url, gateway, analytics]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+      - uses: golangci/golangci-lint-action@v6
+        with:
+          working-directory: ${{ matrix.module }}
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module: [user, url, gateway, analytics]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+      - run: cd ${{ matrix.module }} && go test -race -v ./...
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    strategy:
+      matrix:
+        service: [user, url, gateway, analytics]
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f ${{ matrix.service }}/Dockerfile -t url-shortener/${{ matrix.service }} .

@@ -1,0 +1,62 @@
+{
+  "title": "URL Shortener — overview",
+  "schemaVersion": 38,
+  "tags": ["url-shortener"],
+  "timezone": "browser",
+  "time": {"from": "now-15m", "to": "now"},
+  "refresh": "10s",
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "HTTP RPS (gateway)",
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
+      "targets": [
+        {"expr": "sum(rate(http_requests_total[1m]))", "refId": "A"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "HTTP latency p95 (gateway)",
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "gridPos": {"x": 6, "y": 0, "w": 18, "h": 8},
+      "targets": [
+        {"expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, path))", "legendFormat": "{{path}}", "refId": "A"}
+      ]
+    },
+    {
+      "id": 3,
+      "type": "timeseries",
+      "title": "gRPC errors per service",
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+      "targets": [
+        {"expr": "sum(rate(grpc_requests_total{status!=\"OK\"}[5m])) by (job, status)", "legendFormat": "{{job}} / {{status}}", "refId": "A"}
+      ]
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "Links created / Redirects (url)",
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+      "targets": [
+        {"expr": "sum(rate(links_created_total[1m]))", "legendFormat": "created", "refId": "A"},
+        {"expr": "sum(rate(redirects_total[1m]))", "legendFormat": "redirects", "refId": "B"}
+      ]
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Kafka produced / consumed",
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "gridPos": {"x": 0, "y": 16, "w": 12, "h": 8},
+      "targets": [
+        {"expr": "sum(rate(kafka_messages_produced_total[1m]))", "legendFormat": "produced (url)", "refId": "A"},
+        {"expr": "sum(rate(kafka_messages_consumed_total[1m]))", "legendFormat": "consumed (analytics)", "refId": "B"}
+      ]
+    }
+  ]
+}
